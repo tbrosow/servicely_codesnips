@@ -1,5 +1,5 @@
-// TABLE API SNIPSETS
-
+// TABLE API SNIPSETScc
+ f
 // DELETE RECORDS 
 function deleteRecords(_table) {
 	var log = Logger("ServerScript");
