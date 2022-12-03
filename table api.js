@@ -1,4 +1,4 @@
-// DELETE RECORDS
+// DELETE RECORDS 
 function deleteRecords(_table) {
 	var log = Logger("ServerScript");
 	log.logLevel("TRACE")
