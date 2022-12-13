@@ -1,4 +1,4 @@
-// TABLE API SNIPSETScc
+// TABLE API SNIPSETS
 
 // DELETE RECORDS 
 function deleteRecords(_table) {
@@ -47,14 +47,45 @@ switch (action) {
 }
 
 //########################################################################################################################
+// MAP #getID #getLinkForUI #hasField #evaluate #getDisplayValue #TableClass
+//########################################################################################################################
+var ret = Table("C_DevelopmentTask")
+	// .EQUAL("Status", "open")
+	// .EQUAL("Assignee", "29dbdc7f607811edb43606cc0f36f02e")
+	// .NOT_EMPTY("ParentRecord")
+	.query()
+	.map(record => {
+		return {
+			task_id: record.ID(),
+			task_id2: record.getID(),
+			task_id3: record.id,
+			task_description: record.Description(),
+			task_link: record.getLinkForUI({ relative: true, aspect: "SelfService" }),
+
+			description: record.hasField("ShortDescription") ? record.ShortDescription() : null,
+			requested_by: record.hasField("Requestor") ? record.evaluate("Requestor.getDisplayValue()") : null,
+
+			display_value: record.getDisplayValue(),
+			table_class: record.TableClass()
+		};
+	});
+log.info(JSON.stringify(ret, null, 4))
 //########################################################################################################################
 
 
 
+var log = Logger("TB");
+let current = Table("C_DevelopmentTask").EQUAL("CreatedBy", "1df1988b53e211edb43606cc0f36f02e").query();
+log.info(current.Id())
 
+
+while (current.next()) {
+	log.info(current.Number())
+	current.delete();
+}
 
 var log = Logger("TB");
-let current = Table("C_Story").EQUAL("id", "022d015869ee11edb43606cc0f36f02e").query().next();
+let current = Table("C_DevelopmentTask").EQUAL("CreatedBy", "1df1988b53e211edb43606cc0f36f02e").query().next();
 log.info(current.Id())
 log.info("AG" + current.C_AssignmentGroup().getID());
 
